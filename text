@@ -1,0 +1,104 @@
+# Nas slovnik
+data = {
+    'uzivatel1': 'heslo',
+    'bob': '123',
+    'ann': 'pass123',
+    'mike': 'password123',
+    'liz': 'pass123'
+}
+# texty
+texts = ['''
+Situated about 10 miles west of Kemmerer, 
+Fossil Butte is a ruggedly impressive 
+topographic feature that rises sharply 
+some 1000 feet above Twin Creek Valley 
+to an elevation of more than 7500 feet 
+above sea level. The butte is located just 
+north of US 30N and the Union Pacific Railroad, 
+which traverse the valley.''',
+
+'''At the base of Fossil Butte are the bright 
+red, purple, yellow and gray beds of the Wasatch 
+Formation. Eroded portions of these horizontal 
+beds slope gradually upward from the valley floor 
+and steepen abruptly. Overlying them and extending 
+to the top of the butte are the much steeper 
+buff-to-white beds of the Green River Formation, 
+which are about 300 feet thick.''',
+
+'''The monument contains 8198 acres and protects 
+a portion of the largest deposit of freshwater fish 
+fossils in the world. The richest fossil fish deposits 
+are found in multiple limestone layers, which lie some 
+100 feet below the top of the butte. The fossils 
+represent several varieties of perch, as well as 
+other freshwater genera and herring similar to those 
+in modern oceans. Other fish such as paddlefish, 
+garpike and stingray are also present.'''
+]
+pocet_textu = len(texts)
+
+# Zeptej se na uzivatelske jmeno a heslo
+username = input('Please enter your username: ')
+password = input('Please enter your password: ')
+
+# Podminkovy vyraz pro kontrolu dvojice username a heslo, overeni registrace
+if data.get(username) == password:
+    print("Welcome to the app,",username)
+    print ("We have",pocet_textu, "texts to be analyzed.")
+else:
+    print('You are not allowed to continue.')
+
+# Vyber textu pro analyzu
+vyber_textu = input("Choose text to analyze, the range id from 1 to 3 : ")
+
+if int(vyber_textu) <= 3:
+  print ("You chose text below for analysis : ",texts[int(vyber_textu) - 1])
+else:
+  print("No text for analysis")
+
+text_k_analyze = (texts[int(vyber_textu) - 1].split(" "))
+pocet_slov = len(text_k_analyze)
+print("There are",pocet_slov, "words in the selected text.")
+
+velka_pismena = {}
+for i, text in enumerate([text_k_analyze]):
+    print(f"V textu je :{len([slovo for slovo in text_k_analyze if slovo.istitle()])} slov s pocatecnim velkym pismenem")
+   #velka_pismena[f"text{i}"] = {"There are titlecase words: " : len([slovo for slovo in text_k_analyze if slovo.istitle()])}
+   #print (velka_pismena["text0"])
+
+
+vsechna_velka_pismena = {}
+for i, text in enumerate([text_k_analyze]):
+     print(f"V textu je :{len([slovo for slovo in text_k_analyze if slovo.isupper()])} slov se vsemi velkymi pismeny")
+   #vsechna_velka_pismena = {"There are uppercase words: " : len([slovo for slovo in text_k_analyze if slovo.isupper()])}
+#vsechna_velka_pismena   
+
+mala_pismena = {}
+for i, text in enumerate([text_k_analyze]):
+   print(f"V textu je :{len([slovo for slovo in text_k_analyze if slovo.islower()])} slov napsane malymi pismeny")
+   #mala_pismena = {"There are lowercase words: " : len([slovo for slovo in text_k_analyze if slovo.islower()])}
+#mala_pismena
+
+pocet_cisel = {}
+for i, text in enumerate([text_k_analyze]):
+    print(f"V textu je :{len([slovo for slovo in text_k_analyze if slovo.isdecimal()])} slov, ktera jsou cisla")
+   #pocet_cisel = {"There are lowercase words: " : len([slovo for slovo in text_k_analyze if slovo.isdecimal()])}
+#pocet_cisel
+
+total = 0
+for slovo in text_k_analyze:
+    if slovo.isnumeric():
+        total += int(slovo)
+print("Suma vsech cisel : ",total)
+
+
+delky = [len(slovo) for slovo in text_k_analyze]
+#print(delky)
+
+from collections import Counter
+
+duplicate_dict = Counter(delky)
+
+for key, value in duplicate_dict.items():
+    print("Delka slova", key, " : ", "je v textu", value, "x")
